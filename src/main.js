@@ -4,11 +4,10 @@ import VueRouter from "vue-router";
 import HomePage from "./pages/Home.vue";
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
+import "./index.css";
 
 Vue.use(ElementUI);
 Vue.use(VueRouter);
-
-console.log("window", window);
 
 const routes = [
   {
@@ -35,18 +34,13 @@ const router = new VueRouter({
 Vue.config.productionTip = false;
 
 let instance = null;
-function render() {
+function render(props) {
   instance = new Vue({
     router,
     render: (h) => h(App),
-  }).$mount("#app"); // 这里是挂载到自己的html中  基座会拿到这个挂载后的html 将其插入进去
+  }).$mount(props.container ? props.container.querySelector("#app") : "#app"); // 这里是挂载到自己的html中  基座会拿到这个挂载后的html 将其插入进去
 }
 if (window.__POWERED_BY_QIANKUN__) {
-  console.log(
-    "window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__",
-    window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__
-  );
-
   // 动态添加publicPath
   // eslint-disable-next-line no-undef
   __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__;
